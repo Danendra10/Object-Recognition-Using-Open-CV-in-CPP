@@ -1,0 +1,3 @@
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/rebuild_cache.dir
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/edit_cache.dir
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/tugas_a.dir
