@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named tugas_d
+
+# Build rule for target.
+tugas_d: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tugas_d
+.PHONY : tugas_d
+
+# fast build rule for target.
+tugas_d/fast:
+	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/build
+.PHONY : tugas_d/fast
+
+#=============================================================================
 # Target rules for targets named knn
 
 # Build rule for target.
@@ -122,19 +135,6 @@ knn: cmake_check_build_system
 knn/fast:
 	$(MAKE) -f CMakeFiles/knn.dir/build.make CMakeFiles/knn.dir/build
 .PHONY : knn/fast
-
-#=============================================================================
-# Target rules for targets named recognition
-
-# Build rule for target.
-recognition: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 recognition
-.PHONY : recognition
-
-# fast build rule for target.
-recognition/fast:
-	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/build
-.PHONY : recognition/fast
 
 #=============================================================================
 # Target rules for targets named tugas_b
@@ -243,32 +243,32 @@ src/TugasB/main.cpp.s:
 	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/src/TugasB/main.cpp.s
 .PHONY : src/TugasB/main.cpp.s
 
-src/TugasB/recognition.o: src/TugasB/recognition.cpp.o
+src/TugasD/main.o: src/TugasD/main.cpp.o
 
-.PHONY : src/TugasB/recognition.o
+.PHONY : src/TugasD/main.o
 
 # target to build an object file
-src/TugasB/recognition.cpp.o:
-	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/src/TugasB/recognition.cpp.o
-.PHONY : src/TugasB/recognition.cpp.o
+src/TugasD/main.cpp.o:
+	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/src/TugasD/main.cpp.o
+.PHONY : src/TugasD/main.cpp.o
 
-src/TugasB/recognition.i: src/TugasB/recognition.cpp.i
+src/TugasD/main.i: src/TugasD/main.cpp.i
 
-.PHONY : src/TugasB/recognition.i
+.PHONY : src/TugasD/main.i
 
 # target to preprocess a source file
-src/TugasB/recognition.cpp.i:
-	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/src/TugasB/recognition.cpp.i
-.PHONY : src/TugasB/recognition.cpp.i
+src/TugasD/main.cpp.i:
+	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/src/TugasD/main.cpp.i
+.PHONY : src/TugasD/main.cpp.i
 
-src/TugasB/recognition.s: src/TugasB/recognition.cpp.s
+src/TugasD/main.s: src/TugasD/main.cpp.s
 
-.PHONY : src/TugasB/recognition.s
+.PHONY : src/TugasD/main.s
 
 # target to generate assembly for a file
-src/TugasB/recognition.cpp.s:
-	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/src/TugasB/recognition.cpp.s
-.PHONY : src/TugasB/recognition.cpp.s
+src/TugasD/main.cpp.s:
+	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/src/TugasD/main.cpp.s
+.PHONY : src/TugasD/main.cpp.s
 
 # Help Target
 help:
@@ -277,8 +277,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... tugas_d"
 	@echo "... knn"
-	@echo "... recognition"
 	@echo "... rebuild_cache"
 	@echo "... tugas_b"
 	@echo "... tugas_a"
@@ -291,9 +291,9 @@ help:
 	@echo "... src/TugasB/main.o"
 	@echo "... src/TugasB/main.i"
 	@echo "... src/TugasB/main.s"
-	@echo "... src/TugasB/recognition.o"
-	@echo "... src/TugasB/recognition.i"
-	@echo "... src/TugasB/recognition.s"
+	@echo "... src/TugasD/main.o"
+	@echo "... src/TugasD/main.i"
+	@echo "... src/TugasD/main.s"
 .PHONY : help
 
 

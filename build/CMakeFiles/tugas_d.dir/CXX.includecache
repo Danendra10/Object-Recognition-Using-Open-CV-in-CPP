@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasD/main.cpp
+iostream
+-
+sstream
+-
+string
+-
+vector
+-
+cmath
+-
+fstream
+-
+opencv4/opencv2/opencv.hpp
+-
+

@@ -34,7 +34,7 @@ l   .(h,s dengan label)
 l_______________________________________________________________________________ s/b
 */
 
-struct Point
+struct KnnPoint
 {
     int x;
     int y;
@@ -51,7 +51,7 @@ public:
         for (int i = 0; i < cs_1.size(); i++)
         {
             // put cs_1 to x, cs_2 to y, and label to label
-            Point p;
+            KnnPoint p;
             p.x = cs_1.at(i);
             p.y = cs_2.at(i);
             p.label = label.at(i);
@@ -60,13 +60,13 @@ public:
         cout << "Dataset created" << endl;
     }
 
-    vector<Point> GetData()
+    vector<KnnPoint> GetData()
     {
         return this->data;
     }
 
 private:
-    vector<Point> data;
+    vector<KnnPoint> data;
 };
 
 class KNN
@@ -82,10 +82,10 @@ public:
         this->k = k;
     }
 
-    int Predict(Point p)
+    int Predict(KnnPoint p)
     {
         // get data
-        vector<Point> data = this->data.GetData();
+        vector<KnnPoint> data = this->data.GetData();
         // get distance
         vector<double> distance;
         for (int i = 0; i < data.size(); i++)
