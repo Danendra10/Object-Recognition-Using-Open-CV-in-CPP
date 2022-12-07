@@ -87,6 +87,7 @@ tugas_a: /usr/local/lib/libopencv_photo.so.4.6.0
 tugas_a: /usr/local/lib/libopencv_stitching.so.4.6.0
 tugas_a: /usr/local/lib/libopencv_video.so.4.6.0
 tugas_a: /usr/local/lib/libopencv_videoio.so.4.6.0
+tugas_a: /usr/lib/x86_64-linux-gnu/libpython3.8.so
 tugas_a: /usr/local/lib/libopencv_imgcodecs.so.4.6.0
 tugas_a: /usr/local/lib/libopencv_dnn.so.4.6.0
 tugas_a: /usr/local/lib/libopencv_calib3d.so.4.6.0

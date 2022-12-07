@@ -11,7 +11,10 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../include"
+  "_deps/matplotlib-src"
   "/usr/local/include/opencv4"
+  "/home/dancoeks/.local/lib/python3.8/site-packages/numpy/core/include"
+  "/usr/include/python3.8"
   )
 
 # Targets to which this target links.

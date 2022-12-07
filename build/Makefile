@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build"
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -109,6 +109,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named tugas_b
+
+# Build rule for target.
+tugas_b: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tugas_b
+.PHONY : tugas_b
+
+# fast build rule for target.
+tugas_b/fast:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/build
+.PHONY : tugas_b/fast
 
 #=============================================================================
 # Target rules for targets named tugas_a
@@ -150,18 +163,49 @@ src/TugasA/main.cpp.s:
 	$(MAKE) -f CMakeFiles/tugas_a.dir/build.make CMakeFiles/tugas_a.dir/src/TugasA/main.cpp.s
 .PHONY : src/TugasA/main.cpp.s
 
+src/TugasB/main.o: src/TugasB/main.cpp.o
+
+.PHONY : src/TugasB/main.o
+
+# target to build an object file
+src/TugasB/main.cpp.o:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/src/TugasB/main.cpp.o
+.PHONY : src/TugasB/main.cpp.o
+
+src/TugasB/main.i: src/TugasB/main.cpp.i
+
+.PHONY : src/TugasB/main.i
+
+# target to preprocess a source file
+src/TugasB/main.cpp.i:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/src/TugasB/main.cpp.i
+.PHONY : src/TugasB/main.cpp.i
+
+src/TugasB/main.s: src/TugasB/main.cpp.s
+
+.PHONY : src/TugasB/main.s
+
+# target to generate assembly for a file
+src/TugasB/main.cpp.s:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/src/TugasB/main.cpp.s
+.PHONY : src/TugasB/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... tugas_b"
 	@echo "... tugas_a"
 	@echo "... src/TugasA/main.o"
 	@echo "... src/TugasA/main.i"
 	@echo "... src/TugasA/main.s"
+	@echo "... src/TugasB/main.o"
+	@echo "... src/TugasB/main.i"
+	@echo "... src/TugasB/main.s"
 .PHONY : help
 
 

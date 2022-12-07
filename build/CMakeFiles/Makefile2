@@ -53,6 +53,7 @@ CMAKE_BINARY_DIR = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build"
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/tugas_b.dir/all
 all: CMakeFiles/tugas_a.dir/all
 
 .PHONY : all
@@ -63,9 +64,37 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/tugas_b.dir/clean
 clean: CMakeFiles/tugas_a.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tugas_b.dir
+
+# All Build rule for target.
+CMakeFiles/tugas_b.dir/all:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/depend
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=3,4 "Built target tugas_b"
+.PHONY : CMakeFiles/tugas_b.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tugas_b.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tugas_b.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 0
+.PHONY : CMakeFiles/tugas_b.dir/rule
+
+# Convenience name for target.
+tugas_b: CMakeFiles/tugas_b.dir/rule
+
+.PHONY : tugas_b
+
+# clean rule for target.
+CMakeFiles/tugas_b.dir/clean:
+	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/clean
+.PHONY : CMakeFiles/tugas_b.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/tugas_a.dir

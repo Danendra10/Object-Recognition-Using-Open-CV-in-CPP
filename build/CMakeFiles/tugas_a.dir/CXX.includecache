@@ -17,4 +17,6 @@ vector
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasA/main.cpp
 histogram_learning/TugasA/main.h
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasA/histogram_learning/TugasA/main.h
+unistd.h
+-
 

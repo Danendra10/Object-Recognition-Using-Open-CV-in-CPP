@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/histogram_learning/TugasA/main.h
+iostream
+-
+opencv4/opencv2/opencv.hpp
+../include/histogram_learning/TugasA/opencv4/opencv2/opencv.hpp
+vector
+-
+
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/main.cpp
+histogram_learning/TugasA/main.h
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/histogram_learning/TugasA/main.h
+fstream
+-
+
