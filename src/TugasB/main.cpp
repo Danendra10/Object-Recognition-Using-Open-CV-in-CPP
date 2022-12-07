@@ -5,6 +5,26 @@ char image_path[100];
 
 void SortMatrix(int *matrix);
 
+/**
+ * @param first_data: vector of first data
+ * @param second_data: vector of second data
+ * @param label: vector of label
+ * @param cs: color space
+ */
+void SaveData(vector<int> first_data, vector<int> second_data, vector<int> label, int cs);
+#define USE_RGB 1
+#define USE_HSV 0
+
+int h_fix = 0, s_fix = 0, v_fix = 0;
+int h_buff, s_buff, v_buff;
+// for saving data
+vector<int> h_save, s_save, label_hsv;
+
+int r_fix = 0, g_fix = 0, b_fix = 0;
+int r_buff, g_buff, b_buff;
+// for saving data
+vector<int> g_save, b_save, label_rgb;
+
 int main()
 {
     for (uint8_t color_space = 0; color_space < 2; color_space++)
@@ -22,6 +42,7 @@ int main()
 
                     try
                     {
+                        h_fix = 0, s_fix = 0, v_fix = 0;
                         vector<Mat> hsv_planes;
                         split(image_hsv, hsv_planes);
                         int histSize = 256;
@@ -74,9 +95,6 @@ int main()
                                 v_vec.push_back(image.at<Vec3b>(i, j)[2]);
                             }
                         }
-
-                        int h_fix = 0, s_fix = 0, v_fix = 0;
-                        int h_buff, s_buff, v_buff;
 
                         // Get the most frequent value of H
 
@@ -196,18 +214,17 @@ int main()
                              << "Final : " << h_fix << " " << s_fix << " " << v_fix << endl;
 
                         // save object identification
-                        char obj_path[100];
-                        sprintf(obj_path, "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasB/%d/db_obj_hsv.txt", i);
-                        ofstream obj_file;
-                        obj_file.open(obj_path);
-                        obj_file << h_fix << "," << s_fix << "," << (int)i;
-                        obj_file.close();
                     }
                     catch (const std::exception &e)
                     {
                         std::cerr << e.what() << '\n';
                     }
                 }
+
+                h_save.push_back(h_fix);
+                s_save.push_back(s_fix);
+                label_hsv.push_back(i);
+                SaveData(h_save, s_save, label_hsv, USE_HSV);
             }
         }
         else
@@ -223,6 +240,7 @@ int main()
 
                     try
                     {
+                        r_fix = 0, g_fix = 0, b_fix = 0;
                         vector<Mat> rgb_planes;
                         split(image, rgb_planes);
                         int histSize = 256;
@@ -275,10 +293,6 @@ int main()
                                 b_vec.push_back(image.at<Vec3b>(i, j)[2]);
                             }
                         }
-
-                        // Store fixed data //
-                        int r_fix = 0, g_fix = 0, b_fix = 0;
-                        int r_buff, g_buff, b_buff;
 
                         int biggest_mode_r = 0;
                         vector<double> mode_r, numbers_r;
@@ -389,21 +403,16 @@ int main()
                         cout << endl;
                         cout << "Final data: ";
                         cout << r_fix << " " << g_fix << " " << b_fix << endl;
-
-                        // save object identification
-
-                        char obj_path[100];
-                        sprintf(obj_path, "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasB/%d/db_obj_rgb.txt", i);
-                        ofstream obj_file;
-                        obj_file.open(obj_path);
-                        obj_file << g_fix << "," << b_fix << "," << (int)i;
-                        obj_file.close();
                     }
                     catch (const std::exception &e)
                     {
                         std::cerr << e.what() << '\n';
                     }
                 }
+                g_save.push_back(g_fix);
+                b_save.push_back(b_fix);
+                label_rgb.push_back(i);
+                SaveData(g_save, b_save, label_rgb, USE_RGB);
             }
         }
     }
@@ -422,5 +431,31 @@ void SortMatrix(int *matrix)
                 matrix[j] = temp;
             }
         }
+    }
+}
+
+void SaveData(vector<int> first_data, vector<int> second_data, vector<int> label, int cs)
+{
+    if (cs == USE_RGB)
+    {
+        char path_file[100] = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasB/db_obj_rgb.txt";
+        ofstream file;
+        file.open(path_file, ios_base::out);
+        for (int i = 0; i < first_data.size(); i++)
+        {
+            file << first_data.at(i) << "," << second_data.at(i) << "," << label.at(i) << endl;
+        }
+        file.close();
+    }
+    else
+    {
+        char path_file[100] = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasB/db_obj_hsv.txt";
+        ofstream file;
+        file.open(path_file, ios_base::out);
+        for (int i = 0; i < first_data.size(); i++)
+        {
+            file << first_data.at(i) << "," << second_data.at(i) << "," << label.at(i) << endl;
+        }
+        file.close();
     }
 }
