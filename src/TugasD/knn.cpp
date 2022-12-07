@@ -1,0 +1,514 @@
+#include "histogram_learning/TugasB/knn.h"
+#include "opencv4/opencv2/opencv.hpp"
+#include <fstream>
+#include "histogram_learning/matplotlibcpp.h"
+
+using namespace cv;
+
+#define USE_RGB 1
+#define USE_HSV 0
+
+void LoadParam(int label);
+
+char image_path[100];
+
+vector<int> contrast_hsv_save, correlation_hsv_save, label_hsv_save;
+vector<int> contrast_rgb_save, correlation_rgb_save, label_rgb_save;
+
+int correct_guess = 0;
+int wrong_guess = 0;
+int total_guess = 0;
+
+vector<int> pred;
+vector<int> index_plot;
+int index_plt = 0;
+
+int contrast_fix_hsv = 0, correlation_fix_hsv = 0;
+int contrast_fix_rgb = 0, correlation_fix_rgb = 0;
+int contrast_buff_rgb, correlation_buff_rgb;
+int contrast_buff_hsv, correlation_buff_hsv;
+
+Mat image;
+Mat image_hsv;
+
+namespace plt = matplotlibcpp;
+
+int main()
+{
+    for (int color_space = 0; color_space < 2; color_space++)
+    {
+        if (!color_space)
+        {
+            index_plt = 0, correct_guess = 0;
+            ofstream file;
+            file.open("/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasD/detection_result_hsv.txt");
+            file << "Real | Pred" << endl;
+            LoadParam(USE_HSV);
+
+            for (int i = 0; i < correlation_hsv_save.size(); i++)
+            {
+                cout << correlation_hsv_save[i] << " " << contrast_hsv_save[i] << " " << label_hsv_save[i] << endl;
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                for (int j = 1; j <= 2; j++)
+                {
+                    correlation_fix_hsv = 0, contrast_fix_hsv = 0;
+                    sprintf(image_path, "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/dataset/tugasB/test/%d/%d_%d.png", i, i, j);
+                    cout << image_path << endl;
+                    image = imread(image_path, IMREAD_COLOR);
+                    cvtColor(image, image_hsv, COLOR_BGR2HSV);
+
+                    // get correlation and contrast
+                    Mat lbp_image;
+                    lbp_image = Mat::zeros(image_hsv.rows, image_hsv.cols, CV_8UC1);
+                    // do lbp
+                    for (int i = 1; i < image_hsv.rows - 1; i++)
+                    {
+                        for (int j = 1; j < image_hsv.cols - 1; j++)
+                        {
+                            // get 8 pixel
+                            int p1 = image_hsv.at<Vec3b>(i - 1, j - 1)[0];
+                            int p2 = image_hsv.at<Vec3b>(i - 1, j)[0];
+                            int p3 = image_hsv.at<Vec3b>(i - 1, j + 1)[0];
+                            int p4 = image_hsv.at<Vec3b>(i, j + 1)[0];
+                            int p5 = image_hsv.at<Vec3b>(i + 1, j + 1)[0];
+                            int p6 = image_hsv.at<Vec3b>(i + 1, j)[0];
+                            int p7 = image_hsv.at<Vec3b>(i + 1, j - 1)[0];
+                            int p8 = image_hsv.at<Vec3b>(i, j - 1)[0];
+                            // get center pixel
+                            int p9 = image_hsv.at<Vec3b>(i, j)[0];
+                            // compare
+                            int lbp = 0;
+                            if (p1 > p9)
+                            {
+                                lbp += 1;
+                            }
+                            if (p2 > p9)
+                            {
+                                lbp += 2;
+                            }
+                            if (p3 > p9)
+                            {
+                                lbp += 4;
+                            }
+                            if (p4 > p9)
+                            {
+                                lbp += 8;
+                            }
+                            if (p5 > p9)
+                            {
+                                lbp += 16;
+                            }
+                            if (p6 > p9)
+                            {
+                                lbp += 32;
+                            }
+                            if (p7 > p9)
+                            {
+                                lbp += 64;
+                            }
+                            if (p8 > p9)
+                            {
+                                lbp += 128;
+                            }
+                            // set lbp value
+                            lbp_image.at<uchar>(i, j) = lbp;
+                        }
+                    }
+
+                    // get glcm
+                    Mat glcm_image;
+                    glcm_image = Mat::zeros(256, 256, CV_32FC1);
+                    for (int i = 1; i < image_hsv.rows - 1; i++)
+                    {
+                        for (int j = 1; j < image_hsv.cols - 1; j++)
+                        {
+                            // get 8 pixel
+                            int p1 = lbp_image.at<uchar>(i - 1, j - 1);
+                            int p2 = lbp_image.at<uchar>(i - 1, j);
+                            int p3 = lbp_image.at<uchar>(i - 1, j + 1);
+                            int p4 = lbp_image.at<uchar>(i, j + 1);
+                            int p5 = lbp_image.at<uchar>(i + 1, j + 1);
+                            int p6 = lbp_image.at<uchar>(i + 1, j);
+                            int p7 = lbp_image.at<uchar>(i + 1, j - 1);
+                            int p8 = lbp_image.at<uchar>(i, j - 1);
+                            // get center pixel
+                            int p9 = lbp_image.at<uchar>(i, j);
+                            // set glcm value
+                            glcm_image.at<float>(p9, p1) += 1;
+                            glcm_image.at<float>(p9, p2) += 1;
+                            glcm_image.at<float>(p9, p3) += 1;
+                            glcm_image.at<float>(p9, p4) += 1;
+                            glcm_image.at<float>(p9, p5) += 1;
+                            glcm_image.at<float>(p9, p6) += 1;
+                            glcm_image.at<float>(p9, p7) += 1;
+                            glcm_image.at<float>(p9, p8) += 1;
+                        }
+                    }
+                    // // normalize glcm
+                    normalize(glcm_image, glcm_image, 0, 1, NORM_MINMAX, -1, Mat());
+                    // // get contrast
+                    float contrast = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            contrast += pow(i - j, 2) * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    // get energy
+                    float energy = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            energy += pow(glcm_image.at<float>(i, j), 2);
+                        }
+                    }
+                    // get homogeneity
+                    float homogeneity = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            homogeneity += glcm_image.at<float>(i, j) / (1 + abs(i - j));
+                        }
+                    }
+                    // get correlation
+                    float correlation = 0;
+                    float mean_x = 0;
+                    float mean_y = 0;
+                    float std_x = 0;
+                    float std_y = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            mean_x += i * glcm_image.at<float>(i, j);
+                            mean_y += j * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            std_x += pow(i - mean_x, 2) * glcm_image.at<float>(i, j);
+                            std_y += pow(j - mean_y, 2) * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    std_x = sqrt(std_x);
+                    std_y = sqrt(std_y);
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            correlation += (i - mean_x) * (j - mean_y) * glcm_image.at<float>(i, j) / (std_x * std_y);
+                        }
+                    }
+
+                    Dataset data(contrast_hsv_save, correlation_hsv_save, label_hsv_save);
+
+                    KNN knn_hsv(data, 3);
+
+                    // cout << contrast << " | " << correlation << endl;
+
+                    KnnPoint p;
+                    p.x = contrast;
+                    p.y = correlation;
+                    int label = knn_hsv.Predict(p);
+
+                    file << i << " | " << label << endl;
+
+                    // check correct guess
+                    if (label == i)
+                        correct_guess++;
+                    else
+                        wrong_guess++;
+
+                    index_plt++;
+                    pred.push_back(correct_guess);
+                    index_plot.push_back(index_plt);
+                }
+            }
+            file.close();
+            plt::plot(index_plot, pred);
+            plt::xlabel("data");
+            plt::ylabel("correct guess");
+            plt::title("KNN HSV K: 3");
+            plt::show();
+            pred.clear();
+            index_plot.clear();
+        }
+        else
+        {
+            index_plt = 0, correct_guess = 0;
+            ofstream file;
+            file.open("/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasD/detection_result_rgb.txt");
+            file << "Real | Pred" << endl;
+            LoadParam(USE_RGB);
+
+            for (int i = 0; i < correlation_rgb_save.size(); i++)
+            {
+                cout << correlation_rgb_save[i] << " " << contrast_rgb_save[i] << " " << label_rgb_save[i] << endl;
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                for (int j = 1; j <= 2; j++)
+                {
+                    correlation_fix_rgb = 0, contrast_fix_rgb = 0;
+                    sprintf(image_path, "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/dataset/tugasB/test/%d/%d_%d.png", i, i, j);
+                    cout << image_path << endl;
+                    image = imread(image_path, IMREAD_COLOR);
+
+                    // get correlation and contrast
+                    Mat lbp_image;
+                    lbp_image = Mat::zeros(image.rows, image.cols, CV_8UC1);
+                    // do lbp
+                    for (int i = 1; i < image.rows - 1; i++)
+                    {
+                        for (int j = 1; j < image.cols - 1; j++)
+                        {
+                            // get 8 pixel
+                            int p1 = image.at<Vec3b>(i - 1, j - 1)[0];
+                            int p2 = image.at<Vec3b>(i - 1, j)[0];
+                            int p3 = image.at<Vec3b>(i - 1, j + 1)[0];
+                            int p4 = image.at<Vec3b>(i, j + 1)[0];
+                            int p5 = image.at<Vec3b>(i + 1, j + 1)[0];
+                            int p6 = image.at<Vec3b>(i + 1, j)[0];
+                            int p7 = image.at<Vec3b>(i + 1, j - 1)[0];
+                            int p8 = image.at<Vec3b>(i, j - 1)[0];
+                            // get center pixel
+                            int p9 = image.at<Vec3b>(i, j)[0];
+                            // compare
+                            int lbp = 0;
+                            if (p1 > p9)
+                            {
+                                lbp += 1;
+                            }
+                            if (p2 > p9)
+                            {
+                                lbp += 2;
+                            }
+                            if (p3 > p9)
+                            {
+                                lbp += 4;
+                            }
+                            if (p4 > p9)
+                            {
+                                lbp += 8;
+                            }
+                            if (p5 > p9)
+                            {
+                                lbp += 16;
+                            }
+                            if (p6 > p9)
+                            {
+                                lbp += 32;
+                            }
+                            if (p7 > p9)
+                            {
+                                lbp += 64;
+                            }
+                            if (p8 > p9)
+                            {
+                                lbp += 128;
+                            }
+                            // set lbp value
+                            lbp_image.at<uchar>(i, j) = lbp;
+                        }
+                    }
+
+                    // get glcm
+                    Mat glcm_image;
+                    glcm_image = Mat::zeros(256, 256, CV_32FC1);
+                    for (int i = 1; i < image.rows - 1; i++)
+                    {
+                        for (int j = 1; j < image.cols - 1; j++)
+                        {
+                            // get 8 pixel
+                            int p1 = lbp_image.at<uchar>(i - 1, j - 1);
+                            int p2 = lbp_image.at<uchar>(i - 1, j);
+                            int p3 = lbp_image.at<uchar>(i - 1, j + 1);
+                            int p4 = lbp_image.at<uchar>(i, j + 1);
+                            int p5 = lbp_image.at<uchar>(i + 1, j + 1);
+                            int p6 = lbp_image.at<uchar>(i + 1, j);
+                            int p7 = lbp_image.at<uchar>(i + 1, j - 1);
+                            int p8 = lbp_image.at<uchar>(i, j - 1);
+                            // get center pixel
+                            int p9 = lbp_image.at<uchar>(i, j);
+                            // set glcm value
+                            glcm_image.at<float>(p9, p1) += 1;
+                            glcm_image.at<float>(p9, p2) += 1;
+                            glcm_image.at<float>(p9, p3) += 1;
+                            glcm_image.at<float>(p9, p4) += 1;
+                            glcm_image.at<float>(p9, p5) += 1;
+                            glcm_image.at<float>(p9, p6) += 1;
+                            glcm_image.at<float>(p9, p7) += 1;
+                            glcm_image.at<float>(p9, p8) += 1;
+                        }
+                    }
+                    // // normalize glcm
+                    normalize(glcm_image, glcm_image, 0, 1, NORM_MINMAX, -1, Mat());
+                    // // get contrast
+                    float contrast = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            contrast += pow(i - j, 2) * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    // get energy
+                    float energy = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            energy += pow(glcm_image.at<float>(i, j), 2);
+                        }
+                    }
+                    // get homogeneity
+                    float homogeneity = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            homogeneity += glcm_image.at<float>(i, j) / (1 + abs(i - j));
+                        }
+                    }
+                    // get correlation
+                    float correlation = 0;
+                    float mean_x = 0;
+                    float mean_y = 0;
+                    float std_x = 0;
+                    float std_y = 0;
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            mean_x += i * glcm_image.at<float>(i, j);
+                            mean_y += j * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            std_x += pow(i - mean_x, 2) * glcm_image.at<float>(i, j);
+                            std_y += pow(j - mean_y, 2) * glcm_image.at<float>(i, j);
+                        }
+                    }
+                    std_x = sqrt(std_x);
+                    std_y = sqrt(std_y);
+                    for (int i = 0; i < 256; i++)
+                    {
+                        for (int j = 0; j < 256; j++)
+                        {
+                            correlation += (i - mean_x) * (j - mean_y) * glcm_image.at<float>(i, j) / (std_x * std_y);
+                        }
+                    }
+
+                    Dataset data(contrast_rgb_save, correlation_rgb_save, label_rgb_save);
+
+                    KNN knn_rgb(data, 3);
+
+                    // cout << contrast << " | " << correlation << endl;
+
+                    KnnPoint p;
+                    p.x = contrast;
+                    p.y = correlation;
+                    int label = knn_rgb.Predict(p);
+
+                    file << i << " | " << label << endl;
+
+                    // check correct guess
+                    if (label == i)
+                        correct_guess++;
+                    else
+                        wrong_guess++;
+
+                    index_plt++;
+                    pred.push_back(correct_guess);
+                    index_plot.push_back(index_plt);
+                }
+            }
+            file.close();
+            plt::plot(index_plot, pred);
+            plt::xlabel("data");
+            plt::ylabel("correct guess");
+            plt::title("KNN RGB K: 3");
+            plt::show();
+            pred.clear();
+            index_plot.clear();
+        }
+    }
+}
+
+void LoadParam(int label)
+{
+    if (label == USE_HSV)
+    { // read file
+        char path_file[100] = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasD/db_hsv.txt";
+        ifstream file;
+        file.open(path_file, ios_base::in);
+
+        // read data
+        string line;
+        while (getline(file, line))
+        {
+            stringstream ss(line);
+            string token;
+            int i = 0;
+            while (getline(ss, token, ','))
+            {
+                if (i == 0)
+                {
+                    contrast_hsv_save.push_back(stoi(token));
+                }
+                else if (i == 1)
+                {
+                    correlation_hsv_save.push_back(stoi(token));
+                }
+                else
+                {
+                    label_hsv_save.push_back(stoi(token));
+                }
+                i++;
+            }
+        }
+    }
+    else
+    {
+        char path_file[100] = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/result/tugasD/db_rgb.txt";
+        ifstream file;
+        file.open(path_file, ios_base::in);
+
+        // read data
+        string line;
+        while (getline(file, line))
+        {
+            stringstream ss(line);
+            string token;
+            int i = 0;
+            while (getline(ss, token, ','))
+            {
+                if (i == 0)
+                {
+                    contrast_rgb_save.push_back(stoi(token));
+                }
+                else if (i == 1)
+                {
+                    correlation_rgb_save.push_back(stoi(token));
+                }
+                else
+                {
+                    label_rgb_save.push_back(stoi(token));
+                }
+                i++;
+            }
+        }
+    }
+}
