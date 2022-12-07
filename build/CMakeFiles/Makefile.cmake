@@ -82,6 +82,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/knn.dir/DependInfo.cmake"
+  "CMakeFiles/recognition.dir/DependInfo.cmake"
   "CMakeFiles/tugas_b.dir/DependInfo.cmake"
   "CMakeFiles/tugas_a.dir/DependInfo.cmake"
   )

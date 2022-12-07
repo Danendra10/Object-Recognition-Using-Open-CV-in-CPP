@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/histogram_learning/TugasB/knn.h
+ctime
+-
+iostream
+-
+vector
+-
+fstream
+-
+cmath
+-
+iostream
+-
+sstream
+-
+string
+-
+
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/knn.cpp
+histogram_learning/TugasB/knn.h
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/histogram_learning/TugasB/knn.h
+

@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-../include/histogram_learning/TugasA/main.h
+../include/histogram_learning/TugasB/main.h
 iostream
 -
 opencv4/opencv2/opencv.hpp
-../include/histogram_learning/TugasA/opencv4/opencv2/opencv.hpp
+../include/histogram_learning/TugasB/opencv4/opencv2/opencv.hpp
 vector
+-
+fstream
 -
 
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/main.cpp
-histogram_learning/TugasA/main.h
-/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/histogram_learning/TugasA/main.h
-fstream
--
+histogram_learning/TugasB/main.h
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/src/TugasB/histogram_learning/TugasB/main.h
 

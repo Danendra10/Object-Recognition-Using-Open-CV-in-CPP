@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/recognition.dir/src/TugasB/recognition.cpp.o  -o recognition 

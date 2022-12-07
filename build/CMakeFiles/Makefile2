@@ -53,6 +53,8 @@ CMAKE_BINARY_DIR = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build"
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/knn.dir/all
+all: CMakeFiles/recognition.dir/all
 all: CMakeFiles/tugas_b.dir/all
 all: CMakeFiles/tugas_a.dir/all
 
@@ -64,10 +66,66 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/knn.dir/clean
+clean: CMakeFiles/recognition.dir/clean
 clean: CMakeFiles/tugas_b.dir/clean
 clean: CMakeFiles/tugas_a.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/knn.dir
+
+# All Build rule for target.
+CMakeFiles/knn.dir/all:
+	$(MAKE) -f CMakeFiles/knn.dir/build.make CMakeFiles/knn.dir/depend
+	$(MAKE) -f CMakeFiles/knn.dir/build.make CMakeFiles/knn.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=1,2 "Built target knn"
+.PHONY : CMakeFiles/knn.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/knn.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/knn.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 0
+.PHONY : CMakeFiles/knn.dir/rule
+
+# Convenience name for target.
+knn: CMakeFiles/knn.dir/rule
+
+.PHONY : knn
+
+# clean rule for target.
+CMakeFiles/knn.dir/clean:
+	$(MAKE) -f CMakeFiles/knn.dir/build.make CMakeFiles/knn.dir/clean
+.PHONY : CMakeFiles/knn.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/recognition.dir
+
+# All Build rule for target.
+CMakeFiles/recognition.dir/all:
+	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/depend
+	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=3,4 "Built target recognition"
+.PHONY : CMakeFiles/recognition.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/recognition.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/recognition.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 0
+.PHONY : CMakeFiles/recognition.dir/rule
+
+# Convenience name for target.
+recognition: CMakeFiles/recognition.dir/rule
+
+.PHONY : recognition
+
+# clean rule for target.
+CMakeFiles/recognition.dir/clean:
+	$(MAKE) -f CMakeFiles/recognition.dir/build.make CMakeFiles/recognition.dir/clean
+.PHONY : CMakeFiles/recognition.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/tugas_b.dir
@@ -76,7 +134,7 @@ clean: CMakeFiles/tugas_a.dir/clean
 CMakeFiles/tugas_b.dir/all:
 	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/depend
 	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=3,4 "Built target tugas_b"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=7,8 "Built target tugas_b"
 .PHONY : CMakeFiles/tugas_b.dir/all
 
 # Build rule for subdir invocation for target.
@@ -103,7 +161,7 @@ CMakeFiles/tugas_b.dir/clean:
 CMakeFiles/tugas_a.dir/all:
 	$(MAKE) -f CMakeFiles/tugas_a.dir/build.make CMakeFiles/tugas_a.dir/depend
 	$(MAKE) -f CMakeFiles/tugas_a.dir/build.make CMakeFiles/tugas_a.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=1,2 "Built target tugas_a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=5,6 "Built target tugas_a"
 .PHONY : CMakeFiles/tugas_a.dir/all
 
 # Build rule for subdir invocation for target.

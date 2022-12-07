@@ -44,6 +44,8 @@ include_directories(SYSTEM ${matplotlib_SOURCE_DIR})
 # add executable
 add_executable(tugas_a src/TugasA/main.cpp)
 add_executable(tugas_b src/TugasB/main.cpp)
+add_executable(recognition src/TugasB/recognition.cpp)
+add_executable(knn src/TugasB/knn.cpp)
 
 # link python and numpy
 target_link_libraries(
@@ -54,6 +56,13 @@ target_link_libraries(
 
 target_link_libraries(
         tugas_b ${OpenCV_LIBS}
+        ${PYTHON_LIBRARIES}
+        Python3::NumPy
+        ${LIB_BOOST}
+)
+
+target_link_libraries(
+        knn ${OpenCV_LIBS}
         ${PYTHON_LIBRARIES}
         Python3::NumPy
         ${LIB_BOOST}
