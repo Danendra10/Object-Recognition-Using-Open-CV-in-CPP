@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+// #include "opencv4/opencv2/opencv.hpp"
 
 using namespace std;
 // using namespace cv;
@@ -37,6 +38,7 @@ struct Point
 {
     int x;
     int y;
+    int label;
 };
 
 class Dataset
@@ -48,8 +50,12 @@ public:
         cout << "Creating dataset..." << endl;
         for (int i = 0; i < cs_1.size(); i++)
         {
-            this->data.push_back({cs_1.at(i), cs_2.at(i)});
-            this->label.push_back(label.at(i));
+            // put cs_1 to x, cs_2 to y, and label to label
+            Point p;
+            p.x = cs_1.at(i);
+            p.y = cs_2.at(i);
+            p.label = label.at(i);
+            this->data.push_back(p);
         }
         cout << "Dataset created" << endl;
     }
@@ -59,104 +65,73 @@ public:
         return this->data;
     }
 
-    vector<int> GetLabel()
-    {
-        return this->label;
-    }
-
 private:
     vector<Point> data;
-    vector<int> label;
 };
 
 class KNN
 {
+private:
+    Dataset data;
+    int k;
+
 public:
-    KNN() = default;
-    KNN(Dataset dataset, int k)
+    KNN(Dataset data, int k)
     {
-        this->dataset = dataset;
+        this->data = data;
         this->k = k;
     }
 
     int Predict(Point p)
     {
-        vector<int> label = this->dataset.GetLabel();
-        vector<Point> data = this->dataset.GetData();
-
-        vector<int> distance;
+        // get data
+        vector<Point> data = this->data.GetData();
+        // get distance
+        vector<double> distance;
         for (int i = 0; i < data.size(); i++)
         {
-            distance.push_back(this->EuclideanDistance(p, data.at(i)));
+            double d = sqrt(pow(p.x - data.at(i).x, 2) + pow(p.y - data.at(i).y, 2));
+            distance.push_back(d);
         }
-
-        vector<int> sorted_distance = this->SortDistance(distance);
-        vector<int> k_nearest_label = this->GetKNearestLabel(sorted_distance);
-
-        return this->GetMostFrequentLabel(k_nearest_label);
-    }
-
-private:
-    Dataset dataset;
-    int k;
-
-    int EuclideanDistance(Point p1, Point p2)
-    {
-        return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
-    }
-
-    vector<int> SortDistance(vector<int> distance)
-    {
-        vector<int> sorted_distance = distance;
-        for (int i = 0; i < sorted_distance.size(); i++)
-        {
-            for (int j = 0; j < sorted_distance.size(); j++)
-            {
-                if (sorted_distance.at(i) < sorted_distance.at(j))
-                {
-                    int temp = sorted_distance.at(i);
-                    sorted_distance.at(i) = sorted_distance.at(j);
-                    sorted_distance.at(j) = temp;
-                }
-            }
-        }
-
-        return sorted_distance;
-    }
-
-    vector<int> GetKNearestLabel(vector<int> sorted_distance)
-    {
-        vector<int> k_nearest_label;
+        // get k nearest neighbor
+        vector<int> k_nearest_neighbor;
         for (int i = 0; i < this->k; i++)
         {
-            k_nearest_label.push_back(this->dataset.GetLabel().at(i));
+            // get min distance
+            double min = distance.at(0);
+            int min_index = 0;
+            for (int j = 0; j < distance.size(); j++)
+            {
+                if (distance.at(j) < min)
+                {
+                    min = distance.at(j);
+                    min_index = j;
+                }
+            }
+            // add to k nearest neighbor
+            k_nearest_neighbor.push_back(data.at(min_index).label);
+            // remove from distance
+            distance.erase(distance.begin() + min_index);
         }
-
-        return k_nearest_label;
-    }
-
-    int GetMostFrequentLabel(vector<int> k_nearest_label)
-    {
-        int most_frequent_label = k_nearest_label.at(0);
-        int max_count = 0;
-        for (int i = 0; i < k_nearest_label.size(); i++)
+        // get prediction
+        int prediction = 0;
+        int max = 0;
+        for (int i = 0; i < k_nearest_neighbor.size(); i++)
         {
             int count = 0;
-            for (int j = 0; j < k_nearest_label.size(); j++)
+            for (int j = 0; j < k_nearest_neighbor.size(); j++)
             {
-                if (k_nearest_label.at(i) == k_nearest_label.at(j))
+                if (k_nearest_neighbor.at(i) == k_nearest_neighbor.at(j))
                 {
                     count++;
                 }
             }
-
-            if (count > max_count)
+            if (count > max)
             {
-                max_count = count;
-                most_frequent_label = k_nearest_label.at(i);
+                max = count;
+                prediction = k_nearest_neighbor.at(i);
             }
         }
-
-        return most_frequent_label;
+        return prediction;
     }
 };

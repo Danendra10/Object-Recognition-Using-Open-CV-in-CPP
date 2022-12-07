@@ -17,12 +17,10 @@ int main()
     }
     Dataset data_hsv(h_save, s_save, label_hsv);
 
-    KNN knn(data_hsv, 3);
+    KNN knn(data_hsv, 1);
     Point p;
-    p.x = 100;
-    p.y = 176;
-    knn.Predict(p);
-
+    p.x = 24;
+    p.y = 20;
     // print the prediction
     cout << "Prediction: " << knn.Predict(p) << endl;
 }
