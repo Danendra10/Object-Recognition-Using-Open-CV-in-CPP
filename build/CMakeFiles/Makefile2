@@ -55,6 +55,7 @@ CMAKE_BINARY_DIR = "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build"
 # The main recursive "all" target.
 all: CMakeFiles/knn_tugas_d.dir/all
 all: CMakeFiles/tugas_d.dir/all
+all: CMakeFiles/tugas_c.dir/all
 all: CMakeFiles/knn.dir/all
 all: CMakeFiles/tugas_b.dir/all
 all: CMakeFiles/tugas_a.dir/all
@@ -69,6 +70,7 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/knn_tugas_d.dir/clean
 clean: CMakeFiles/tugas_d.dir/clean
+clean: CMakeFiles/tugas_c.dir/clean
 clean: CMakeFiles/knn.dir/clean
 clean: CMakeFiles/tugas_b.dir/clean
 clean: CMakeFiles/tugas_a.dir/clean
@@ -109,7 +111,7 @@ CMakeFiles/knn_tugas_d.dir/clean:
 CMakeFiles/tugas_d.dir/all:
 	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/depend
 	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=9,10 "Built target tugas_d"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=11,12 "Built target tugas_d"
 .PHONY : CMakeFiles/tugas_d.dir/all
 
 # Build rule for subdir invocation for target.
@@ -128,6 +130,33 @@ tugas_d: CMakeFiles/tugas_d.dir/rule
 CMakeFiles/tugas_d.dir/clean:
 	$(MAKE) -f CMakeFiles/tugas_d.dir/build.make CMakeFiles/tugas_d.dir/clean
 .PHONY : CMakeFiles/tugas_d.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/tugas_c.dir
+
+# All Build rule for target.
+CMakeFiles/tugas_c.dir/all:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/depend
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" --progress-num=9,10 "Built target tugas_c"
+.PHONY : CMakeFiles/tugas_c.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/tugas_c.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tugas_c.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles" 0
+.PHONY : CMakeFiles/tugas_c.dir/rule
+
+# Convenience name for target.
+tugas_c: CMakeFiles/tugas_c.dir/rule
+
+.PHONY : tugas_c
+
+# clean rule for target.
+CMakeFiles/tugas_c.dir/clean:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/clean
+.PHONY : CMakeFiles/tugas_c.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/knn.dir

@@ -84,6 +84,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/knn_tugas_d.dir/DependInfo.cmake"
   "CMakeFiles/tugas_d.dir/DependInfo.cmake"
+  "CMakeFiles/tugas_c.dir/DependInfo.cmake"
   "CMakeFiles/knn.dir/DependInfo.cmake"
   "CMakeFiles/tugas_b.dir/DependInfo.cmake"
   "CMakeFiles/tugas_a.dir/DependInfo.cmake"

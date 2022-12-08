@@ -1,6 +1,7 @@
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/edit_cache.dir
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/knn_tugas_d.dir
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/tugas_d.dir
+/home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/tugas_c.dir
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/knn.dir
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/rebuild_cache.dir
 /home/dancoeks/Kuliah/DSEC/Tugas Akhir/build/CMakeFiles/tugas_b.dir

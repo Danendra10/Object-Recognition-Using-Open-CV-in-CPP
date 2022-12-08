@@ -48,6 +48,8 @@ add_executable(tugas_a src/TugasA/main.cpp)
 add_executable(tugas_b src/TugasB/main.cpp)
 add_executable(knn src/TugasB/knn.cpp)
 
+add_executable(tugas_c src/TugasC/main.cpp)
+
 
 add_executable(tugas_d src/TugasD/main.cpp)
 add_executable(knn_tugas_d src/TugasD/knn.cpp)
@@ -68,6 +70,13 @@ target_link_libraries(
 
 target_link_libraries(
         knn ${OpenCV_LIBS}
+        ${PYTHON_LIBRARIES}
+        Python3::NumPy
+        ${LIB_BOOST}
+)
+
+target_link_libraries(
+        tugas_c ${OpenCV_LIBS}
         ${PYTHON_LIBRARIES}
         Python3::NumPy
         ${LIB_BOOST}

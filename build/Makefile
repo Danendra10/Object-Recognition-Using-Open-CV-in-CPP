@@ -137,6 +137,19 @@ tugas_d/fast:
 .PHONY : tugas_d/fast
 
 #=============================================================================
+# Target rules for targets named tugas_c
+
+# Build rule for target.
+tugas_c: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tugas_c
+.PHONY : tugas_c
+
+# fast build rule for target.
+tugas_c/fast:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/build
+.PHONY : tugas_c/fast
+
+#=============================================================================
 # Target rules for targets named knn
 
 # Build rule for target.
@@ -256,6 +269,33 @@ src/TugasB/main.cpp.s:
 	$(MAKE) -f CMakeFiles/tugas_b.dir/build.make CMakeFiles/tugas_b.dir/src/TugasB/main.cpp.s
 .PHONY : src/TugasB/main.cpp.s
 
+src/TugasC/main.o: src/TugasC/main.cpp.o
+
+.PHONY : src/TugasC/main.o
+
+# target to build an object file
+src/TugasC/main.cpp.o:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/src/TugasC/main.cpp.o
+.PHONY : src/TugasC/main.cpp.o
+
+src/TugasC/main.i: src/TugasC/main.cpp.i
+
+.PHONY : src/TugasC/main.i
+
+# target to preprocess a source file
+src/TugasC/main.cpp.i:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/src/TugasC/main.cpp.i
+.PHONY : src/TugasC/main.cpp.i
+
+src/TugasC/main.s: src/TugasC/main.cpp.s
+
+.PHONY : src/TugasC/main.s
+
+# target to generate assembly for a file
+src/TugasC/main.cpp.s:
+	$(MAKE) -f CMakeFiles/tugas_c.dir/build.make CMakeFiles/tugas_c.dir/src/TugasC/main.cpp.s
+.PHONY : src/TugasC/main.cpp.s
+
 src/TugasD/knn.o: src/TugasD/knn.cpp.o
 
 .PHONY : src/TugasD/knn.o
@@ -319,6 +359,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... knn_tugas_d"
 	@echo "... tugas_d"
+	@echo "... tugas_c"
 	@echo "... knn"
 	@echo "... rebuild_cache"
 	@echo "... tugas_b"
@@ -332,6 +373,9 @@ help:
 	@echo "... src/TugasB/main.o"
 	@echo "... src/TugasB/main.i"
 	@echo "... src/TugasB/main.s"
+	@echo "... src/TugasC/main.o"
+	@echo "... src/TugasC/main.i"
+	@echo "... src/TugasC/main.s"
 	@echo "... src/TugasD/knn.o"
 	@echo "... src/TugasD/knn.i"
 	@echo "... src/TugasD/knn.s"
